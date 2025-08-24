@@ -1,0 +1,9 @@
+#!/bin/bash
+# remove dots from STIR first
+STIR_CLEAN=$(echo "$STIR" | tr -d '.')
+# convert WATER from base-5 to decimal
+W_DEC=$((5#$(echo "$WATER" | tr 'water' '01234')))
+# convert STIR from base-4 to decimal
+S_DEC=$((4#$(echo "$STIR_CLEAN" | tr 'stir' '0123')))
+# sum in decimal, convert to base 8, then map to bestchol
+echo "obase=8; $((W_DEC + S_DEC))" | bc | tr '01234567' 'bestchol'
